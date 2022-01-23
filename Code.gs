@@ -8,13 +8,18 @@ const ss = SpreadsheetApp.openById(ssId);
 //delete
 
 function find(targetSheet, query) {
-  if (Object.keys(searchObj).length === 0){
+  targetSheet = "sales_db"
+  query = {
+    "store_name" : "ceger",
+    "member_notelp" : "6281212493669"
+  }
+  if (Object.keys(query).length === 0){
     return false;
   }
-  let sheet = ss.getSheetByName(sheetName);
+  let sheet = ss.getSheetByName(targetSheet);
 
-  let searchKey = Object.keys(searchObj);
-  let searchData = Object.values(searchObj);
+  let searchKey = Object.keys(query);
+  let searchData = Object.values(query);
 
   let colWidth = sheet.getLastColumn();
   let rowHeight = sheet.getLastRow();
