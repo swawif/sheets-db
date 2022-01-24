@@ -1,5 +1,5 @@
-const ssId = key(); // change with your own ssId
-const ss = SpreadsheetApp.openById(ssId);
+const spreadSheetId = key(); // change with your own ssId
+const ss = SpreadsheetApp.openById(spreadSheetId);
 
 //create
 
@@ -8,12 +8,7 @@ const ss = SpreadsheetApp.openById(ssId);
 //delete
 
 function find(targetSheet, query) {
-  targetSheet = "sales_db"
-  query = {
-    "store_name" : "ceger",
-    "member_notelp" : "6281212493669"
-  }
-  if (Object.keys(query).length === 0){
+  if (Object.keys(query).length === 0) {
     return false;
   }
   let sheet = ss.getSheetByName(targetSheet);
@@ -40,9 +35,9 @@ function find(targetSheet, query) {
 
   // get row array that corresponds to the matching column
   let rowCollection = [];
-  for(let b = 0; b < matchingColumn.length; b++){
+  for (let b = 0; b < matchingColumn.length; b++) {
     let tempArr = [];
-    let rowVal = sheet.getRange(2,matchingColumn[b],rowHeight-1,1).getValues();
+    let rowVal = sheet.getRange(2, matchingColumn[b], rowHeight - 1, 1).getValues();
     rowVal.forEach(arr => {
       tempArr.push(arr[0]);
     });
@@ -57,18 +52,20 @@ function find(targetSheet, query) {
   // see both array, which has 
 
   let matchingRow = []
-  for(let c = 0; c < rowCollection.length; c++){
+  for (let c = 0; c < rowCollection.length; c++) {
     let tempArr = [];
-    for(let d = 0; d < rowCollection[c].length; d++){
-        Logger.log(`c = ${c}, d = ${d}, data = ${rowCollection[c][d]} search = ${searchData[c]}`);
-        Logger.log(rowCollection[c].includes(searchData[c],d));
-      if(rowCollection[c][d] === searchData[c]){
-        tempArr.push(d+1);
+    for (let d = 0; d < rowCollection[c].length; d++) {
+      Logger.log(`c = ${c}, d = ${d}, data = ${rowCollection[c][d]} search = ${searchData[c]}`);
+      Logger.log(rowCollection[c].includes(searchData[c], d));
+      if (rowCollection[c][d] === searchData[c]) {
+        tempArr.push(d + 1);
       }
     }
     matchingRow.push(tempArr);
   }
   Logger.log(matchingRow);
+
+  if (matchingRow[0][0] === undefined) { return false }
 
   // match matchingRow[0.1.2]
   // thank you AllWorkNoPlay - https://stackoverflow.com/questions/70803864/
@@ -76,22 +73,23 @@ function find(targetSheet, query) {
   let m1 = matchingRow[0].slice();
   let mOther = matchingRow.slice(1);
 
-  let intersect = m1.filter((element) => mOther.every((other) => other.indexOf(element)>-1));
+  let intersect = m1.filter((element) => mOther.every((other) => other.indexOf(element) > -1));
 
   // now return the result
 
   let result = {
-    "index" : intersect,
-    "result" : [] 
+    "index": intersect,
+    "result": []
   };
-  for(let e = 0 ; e < intersect.length ; e++){
-    let tempArr = sheet.getRange(intersect[e]+1, 1,1,colWidth).getValues();
+  for (let e = 0; e < intersect.length; e++) {
+    let tempArr = sheet.getRange(intersect[e] + 1, 1, 1, colWidth).getValues();
     tempArr = tempArr[0];
     let tempObj = {};
-    for(let f = 0; f < dbKey.length; f++){
+    for (let f = 0; f < dbKey.length; f++) {
       tempObj[dbKey[f]] = tempArr[f];
     }
     result.result.push(tempObj);
   }
   Logger.log(result);
+  return result;
 }
