@@ -1,5 +1,6 @@
 // ﷽
 
+// if you already have ss declared elsewhere, delete these two lines
 const spreadSheetId = key(); // change with your own ssId
 const ss = SpreadsheetApp.openById(spreadSheetId);
 
@@ -30,7 +31,7 @@ function find(targetSheet, query) {
   for (let i = 0; i < searchKey.length; i++) {
     for (let a = 0; a < dbKey.length; a++) {
       if (dbKey[a] === searchKey[i]) {
-        matchingColumn.push(a + 1); //[3,6]
+        matchingColumn.push(a + 1);
       }
     }
   }
@@ -44,8 +45,6 @@ function find(targetSheet, query) {
       tempArr.push(arr[0]);
     });
     rowCollection.push(tempArr);
-    Logger.log(tempArr);
-    Logger.log(rowCollection);
   };
 
   // match rowCollection with the searchData
@@ -57,17 +56,14 @@ function find(targetSheet, query) {
   for (let c = 0; c < rowCollection.length; c++) {
     let tempArr = [];
     for (let d = 0; d < rowCollection[c].length; d++) {
-      Logger.log(`c = ${c}, d = ${d}, data = ${rowCollection[c][d]} search = ${searchData[c]}`);
-      Logger.log(rowCollection[c].includes(searchData[c], d));
       if (rowCollection[c][d] === searchData[c]) {
         tempArr.push(d + 1);
       }
     }
     matchingRow.push(tempArr);
   }
-  Logger.log(matchingRow);
 
-  // No matches found, return false
+  // If no matches found, return false
   if (matchingRow[0].length === 0) { return false }
 
   // thank you AllWorkNoPlay - https://stackoverflow.com/questions/70803864/
