@@ -67,9 +67,9 @@ function find(targetSheet, query) {
   }
   Logger.log(matchingRow);
 
-  if (matchingRow[0][0] === undefined) { return false }
+  // No matches found, return false
+  if (matchingRow[0].length === 0) { return false }
 
-  // match matchingRow[0.1.2]
   // thank you AllWorkNoPlay - https://stackoverflow.com/questions/70803864/
 
   let m1 = matchingRow[0].slice();
