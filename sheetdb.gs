@@ -1,3 +1,5 @@
+// ﷽
+
 const spreadSheetId = key(); // change with your own ssId
 const ss = SpreadsheetApp.openById(spreadSheetId);
 
