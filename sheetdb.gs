@@ -10,6 +10,16 @@ const ss = SpreadsheetApp.openById(spreadSheetId);
 
 //delete
 
+function deleteOne(targetSheet, itemId) {
+  let sheet = ss.getSheetByName(targetSheet);
+  let deleteItem = find(targetSheet, { id: itemId });
+
+  if (!deleteItem) { return false } // failed to delete, because no itemId is found
+  sheet.deleteRow(deleteItem.index[0]);
+  Logger.log("Successfully deleted row " + (deleteItem.index[0] + 1));
+  return true;
+}
+
 function find(targetSheet, query) {
   if (Object.keys(query).length === 0) {
     return false;
@@ -72,6 +82,11 @@ function find(targetSheet, query) {
   let mOther = matchingRow.slice(1);
 
   let intersect = m1.filter((element) => mOther.every((other) => other.indexOf(element) > -1));
+
+  // increment all result in intersect to match to row numbering
+  for (let g = 0; g < intersect.length; g++) {
+    intersect[g] = intersect[g]+1;
+  }
 
   // now return the result
 
