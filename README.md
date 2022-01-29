@@ -4,7 +4,7 @@ it is used for automating read write from and to database in Google sheet. so yo
 
 ## Installation
 1. Copy the code in sheetdb.gs to a new file.gs in your app script project
-2. make sure that you declare the variable `ss = SpreadsheetApp.openById(yourSheetId) (or getActiveSpreadsheet())` on top of your code
+2. make sure that you declare the variable `const ss = SpreadsheetApp.openById(yourSheetId) (or getActiveSpreadsheet())` on top of your code (it could be on any file)
 3. Done! You can start using it by calling its functions
 
 ## Google Sheet Setup
